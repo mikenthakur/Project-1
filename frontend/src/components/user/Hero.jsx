@@ -10,7 +10,7 @@ const Hero = () => {
           delivered hot and fast, straight to your door.
         </p>
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-medium py-0.5 px-1  h-12 w-28 rounded-full">
-          View Menu
+          <a href='#explore-menu'>View Menu</a>
         </button>
       </div>
     </div>
