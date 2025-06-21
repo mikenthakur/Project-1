@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react'
-import {  Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/user/Home'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLogin from './components/admin/AdminLogin'
@@ -17,63 +16,62 @@ import Payment from './pages/user/Payment'
 import Add from './components/admin/Add'
 import List from './components/admin/List'
 import Orders from './components/admin/Orders'
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify'
 import LandingPage from './pages/user/LandingPage'
+
 const AppLayout = () => {
   const location = useLocation()
   const [showLogin, setShowLogin] = useState(false)
-  const [setShowLoginRider,setSetShowLoginRider]=useState(false)
-const url = "http://localhost:4000"
+  const [showLoginRider, setShowLoginRider] = useState(false)
+
+  const url = "http://localhost:4000"
+
   const renderNavbar = () => {
-  if (
-    location.pathname === '/' || 
-    location.pathname === '/admin/login' || 
-    location.pathname === '/rider/login'
-  ) {
-    return null;
-  } else if (location.pathname.startsWith('/admin')) {
-    return <AdminNavbar />;
-  } else if (location.pathname.startsWith('/rider')) {
-    return <RiderNavbar setSetShowLoginRider={setSetShowLoginRider} />;
-  } else {
-    return <Navbar setShowLogin={setShowLogin} />;
+    if (
+      location.pathname === '/' ||
+      location.pathname === '/admin/login' ||
+      location.pathname === '/rider/login'
+    ) {
+      return null
+    } else if (location.pathname.startsWith('/admin')) {
+      return <AdminNavbar />
+    } else if (location.pathname.startsWith('/rider')) {
+      return <RiderNavbar setShowLoginRider={setShowLoginRider} />
+    } else {
+      return <Navbar setShowLogin={setShowLogin} />
+    }
   }
-};
 
-  const showFooter = !location.pathname.startsWith('/admin') &&
-                   !location.pathname.startsWith('/rider') &&
-                   location.pathname !== '/';
-
+  const showFooter =
+    !location.pathname.startsWith('/admin') &&
+    !location.pathname.startsWith('/rider') &&
+    location.pathname !== '/'
 
   return (
     <div>
-      <ToastContainer/>
-      
+      <ToastContainer />
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       {renderNavbar()}
-      
       <Routes>
-        <Route path='/' element={<LandingPage/>} />
-        <Route path='/home' element={<Home/>}/>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/sign-in' element={<LoginPopup setShowLogin={() => {}} />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/order' element={<PlaceOrder />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/login' element={<AdminLogin />} />
-        <Route path='/admin/add' element={<Add/>} url={url} />
-        <Route path='/admin/list' element={<List/>}  url={url}/>
-        <Route path='/admin/orders' element={<Orders/>} url={url} />
+        <Route path='/admin/add' element={<Add url={url} />} />
+        <Route path='/admin/list' element={<List url={url} />} />
+        <Route path='/admin/orders' element={<Orders url={url} />} />
         <Route path='/rider' element={<RiderDashboard />} />
         <Route path='/rider/login' element={<RiderLogin />} />
-        <Route path='/payment' element={<Payment/>}/>
+        <Route path='/payment' element={<Payment />} />
       </Routes>
       {showFooter && <Footer />}
-      
     </div>
   )
 }
 
-const App = () => {
-  return (<AppLayout />)
-}
+const App = () => <AppLayout />
 
 export default App
