@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 import { assets } from '../../assets/frontend_assets/assets'
-import { StoreContext } from '../../context/StoreContext'
 
 const LoginPopup = ({ setShowLogin }) => {
   const [currState, setCurrState] = useState("Sign Up")
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  })
   const navigate = useNavigate()
 
   const handleClose = () => {
@@ -12,9 +18,39 @@ const LoginPopup = ({ setShowLogin }) => {
     navigate('/home')
   }
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      if (currState === "Login") {
+        const res = await axios.post("http://localhost:4000/api/user/login", {
+          email: formData.email,
+          password: formData.password
+        })
+        toast.success("Login successful!")
+      } else {
+        const res = await axios.post("http://localhost:4000/api/user/regitser", {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+        toast.success("Registration successful!")
+      }
+      handleClose()
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Something went wrong")
+    }
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <form className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative" onSubmit={(e) => e.preventDefault()}>
+      <form
+        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative"
+        onSubmit={handleSubmit}
+      >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">{currState}</h2>
           <img
@@ -29,6 +65,9 @@ const LoginPopup = ({ setShowLogin }) => {
           {currState !== "Login" && (
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Enter your name"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -36,12 +75,18 @@ const LoginPopup = ({ setShowLogin }) => {
           )}
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Enter your email"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="Enter your password"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
