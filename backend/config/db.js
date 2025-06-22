@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
 
- export const connectDB  = async () => {
-    await mongoose.connect('mongodb://127.0.0.1:27017/PROJECT_1').then(()=>console.log("DB Connected"));
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.log("MongoDB connection error:", error);
+  }
+};
 
-// mongodb+srv://miken:miken@cluster0.mme8db1.mongodb.net/PROJECT_1
+export default connectDB;
+
