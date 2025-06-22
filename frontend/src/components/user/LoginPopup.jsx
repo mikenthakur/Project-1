@@ -32,7 +32,7 @@ const LoginPopup = ({ setShowLogin }) => {
         })
         toast.success("Login successful!")
       } else {
-        const res = await axios.post("http://localhost:4000/api/user/regitser", {
+        const res = await axios.post("http://localhost:4000/api/user/register", {
           name: formData.name,
           email: formData.email,
           password: formData.password
