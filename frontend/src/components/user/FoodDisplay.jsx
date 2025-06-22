@@ -1,11 +1,30 @@
-import React, { useContext } from "react";
-import { StoreContext } from "../../context/StoreContext";
+import React, { useEffect, useState } from "react";
 import FoodItem from "./FoodItem";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const FoodDisplay = ({ category }) => {
-  const { food_list } = useContext(StoreContext);
+  const [foodList, setFoodList] = useState([]);
 
-  const filteredList = food_list?.filter(
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/food/list");
+        if (response.data.success) {
+          setFoodList(response.data.data);
+        } else {
+          toast.error("Failed to fetch food items");
+        }
+      } catch (error) {
+        console.error("Error fetching food:", error);
+        toast.error("Error fetching food items");
+      }
+    };
+
+    fetchFood();
+  }, []);
+
+  const filteredList = foodList?.filter(
     (item) => category === "All" || item.category === category
   );
 
@@ -23,7 +42,7 @@ const FoodDisplay = ({ category }) => {
             name={item.name}
             description={item.description}
             price={item.price}
-            image={item.image}
+            image={`http://localhost:4000/images/${item.image}`}
           />
         ))}
       </div>
