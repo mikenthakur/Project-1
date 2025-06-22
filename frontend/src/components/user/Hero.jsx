@@ -9,9 +9,11 @@ const Hero = () => {
           Welcome to Khaja-Sathi! Enjoy our delicious meals made with fresh ingredients — 
           delivered hot and fast, straight to your door.
         </p>
+        <a href="#explore-menu">
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-medium py-0.5 px-1  h-12 w-28 rounded-full">
           View Menu
         </button>
+        </a>
       </div>
     </div>
   );

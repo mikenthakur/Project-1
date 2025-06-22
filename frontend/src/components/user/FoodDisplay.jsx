@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "./FoodItem";
-import { assets } from "../../assets/frontend_assets/assets";
+
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(StoreContext);
 
@@ -15,7 +15,7 @@ const FoodDisplay = ({ category }) => {
         Top Dishes Near You
       </h2>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {filteredList?.map((item) => (
           <FoodItem
             key={item._id}
