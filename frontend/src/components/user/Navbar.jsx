@@ -7,17 +7,19 @@ const Navbar = ({setShowLogin}) => {
  const {getTotalCartAmount} = useContext(StoreContext)
   return (
     <div className=" navbar flex items-center justify-between px-10 py-6 bg-white shadow-md">
-        <Link to={"/home"}>
+        <Link to={"/"}>
       <h1 className="text-2xl font-bold text-gray-800">KhajaSathi</h1>
       </Link>
       <ul className="flex space-x-6 text-gray-700 font-medium cursor-pointer">
-        <Link  to={"/home"} onClick={()=>setMenu("home")} className={menu==="home"?"active":""} >Home</Link>
+        <Link  to={"/"} onClick={()=>setMenu("home")} className={menu==="home"?"active":""} >Home</Link>
         <a href='#explore-menu' onClick={()=>setMenu("menu")}  className={menu==="menu"?"active":""}>Menu</a>
         <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu==="contact-us"?"active":""}>Contact us</a>
       </ul>
       <div className="flex items-center space-x-4">
-        {/* <img src={assets.search_icon} alt="Search" className="w-6 h-6 cursor-pointer" /> */}
-        <div>My orders</div>
+        
+        <Link to="/orders">
+        My orders
+        </Link>
         <div className="relative">
           <Link to={"/cart"}>
           <img src={assets.basket_icon} alt="Basket" className="w-6 h-6 cursor-pointer" />

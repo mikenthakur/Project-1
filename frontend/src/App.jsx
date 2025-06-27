@@ -17,7 +17,7 @@ import Add from './components/admin/Add'
 import List from './components/admin/List'
 import Orders from './components/admin/Orders'
 import { ToastContainer } from 'react-toastify'
-import LandingPage from './pages/user/LandingPage'
+
 
 const AppLayout = () => {
   const location = useLocation()
@@ -27,20 +27,20 @@ const AppLayout = () => {
   const url = "http://localhost:4000"
 
   const renderNavbar = () => {
-    if (
-      location.pathname === '/' ||
-      location.pathname === '/admin/login' ||
-      location.pathname === '/rider/login'
-    ) {
-      return null
-    } else if (location.pathname.startsWith('/admin')) {
-      return <AdminNavbar />
-    } else if (location.pathname.startsWith('/rider')) {
-      return <RiderNavbar setShowLoginRider={setShowLoginRider} />
-    } else {
-      return <Navbar setShowLogin={setShowLogin} />
-    }
+  if (
+    location.pathname === '/admin/login' ||
+    location.pathname === '/rider/login'
+  ) {
+    return null
+  } else if (location.pathname.startsWith('/admin')) {
+    return <AdminNavbar />
+  } else if (location.pathname.startsWith('/rider')) {
+    return <RiderNavbar setShowLoginRider={setShowLoginRider} />
+  } else {
+    return <Navbar setShowLogin={setShowLogin} />
   }
+}
+
 
   const showFooter =
     !location.pathname.startsWith('/admin') &&
@@ -53,8 +53,7 @@ const AppLayout = () => {
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       {renderNavbar()}
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path='/sign-in' element={<LoginPopup setShowLogin={() => {}} />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/order' element={<PlaceOrder />} />

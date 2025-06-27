@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
-
 import { useNavigate } from "react-router-dom";
-import { food_list } from "../../assets/frontend_assets/assets";
 
 const Cart = () => {
   const {
     cartItems,
-    setCartItems,
+    foodList,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
   } = useContext(StoreContext);
+
   const navigate = useNavigate();
 
   return (
@@ -27,24 +26,21 @@ const Cart = () => {
             <p className="col-span-1">Remove</p>
           </div>
           <hr />
-          {food_list.map((item, index) => {
+          {foodList?.map((item) => {
             if (cartItems[item._id] > 0) {
               return (
-                <>
-                  <div
-                    key={item._id}
-                    className="grid grid-cols-6 gap-4 items-center p-4 border-b text-sm md:text-base"
-                  >
+                <div key={item._id}>
+                  <div className="grid grid-cols-6 gap-4 items-center p-4 border-b text-sm md:text-base">
                     <img
-                      src={item.image}
+                      src={`http://localhost:4000/images/${item.image}`}
                       alt={item.name}
                       className="w-14 h-14 object-cover rounded col-span-1"
                     />
                     <p className="col-span-1">{item.name}</p>
-                    <p className="col-span-1">Rs{item.price}</p>
+                    <p className="col-span-1">Rs {item.price}</p>
                     <p className="col-span-1">{cartItems[item._id]}</p>
                     <p className="col-span-1">
-                      Rs{item.price * cartItems[item._id]}
+                      Rs {item.price * cartItems[item._id]}
                     </p>
                     <button
                       onClick={() => removeFromCart(item._id)}
@@ -54,30 +50,29 @@ const Cart = () => {
                     </button>
                   </div>
                   <hr />
-                </>
+                </div>
               );
             }
           })}
         </div>
 
-        {/* Cart Total + Promo Code Side-by-Side */}
+        {/* Cart Total + Checkout */}
         <div className="mt-8 flex flex-col lg:flex-row justify-between gap-6 max-w-6xl mx-auto">
-          {/* Cart Total */}
           <div className="bg-white shadow-md rounded-lg p-6 flex-1">
             <h2 className="text-xl font-bold mb-4">Cart Total</h2>
             <div className="space-y-3 text-sm md:text-base">
               <div className="flex justify-between">
                 <p>Subtotal</p>
-                <p>Rs{getTotalCartAmount}</p>
+                <p>Rs {getTotalCartAmount()}</p>
               </div>
               <div className="flex justify-between">
                 <p>Delivery Fee</p>
-                <p>Rs{getTotalCartAmount() === 0 ? 0 : 20}</p>
+                <p>Rs {getTotalCartAmount() === 0 ? 0 : 20}</p>
               </div>
               <div className="flex justify-between font-bold border-t pt-2">
                 <p>Total</p>
                 <p>
-                  Rs{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 20}
+                  Rs {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 20}
                 </p>
               </div>
             </div>
