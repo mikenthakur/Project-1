@@ -42,10 +42,10 @@ const AppLayout = () => {
 }
 
 
-  const showFooter =
-    !location.pathname.startsWith('/admin') &&
-    !location.pathname.startsWith('/rider') &&
-    location.pathname !== '/'
+ const showFooter =
+  !location.pathname.startsWith('/admin') &&
+  !location.pathname.startsWith('/rider')
+
 
   return (
     <div>
